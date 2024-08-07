@@ -1,0 +1,2 @@
+Owner,Author,Disclaimer,Description,Version,Name,UIName,URL,entityName,oAuthSettingId,transformSettingIDs,seedIDs,outputEntities
+Spur Intelligence Corp,Jack <jack@spur.us>,,Spur VPN/ Proxy/ Residential Proxy Context for an IP address.,0.3,iptospurcontext,IPv4 to Spur Context [Spur Intelligence],https://spurintelligence.github.io/run/iptospurcontext,maltego.IPv4Address,,language;global#api_key;global#api_key,context,maltego.Location;maltego.AS;maltego.Phrase

@@ -1,0 +1,44 @@
+{
+  "as": {
+    "number": 212238,
+    "organization": "Datacamp Limited"
+  },
+  "client": {
+    "behaviors": [
+      "MULLVAD_VPN_USER"
+    ]
+  },
+  "infrastructure": "DATACENTER",
+  "ip": "149.40.50.98",
+  "location": {
+    "city": "Boston",
+    "country": "US",
+    "state": "Massachusetts"
+  },
+  "organization": "Datacamp Limited",
+  "risks": [
+    "TUNNEL"
+  ],
+  "services": [
+    "WIREGUARD"
+  ],
+  "tunnels": [
+    {
+      "anonymous": true,
+      "exits": [
+        "149.40.50.106",
+        "149.40.50.109",
+        "149.40.50.104",
+        "149.40.50.100",
+        "149.40.50.110",
+        "149.40.50.108",
+        "149.40.50.103",
+        "149.40.50.111",
+        "149.40.50.101",
+        "149.40.50.105"
+      ],
+      "operator": "MULLVAD_VPN",
+      "type": "VPN"
+    }
+  ]
+}

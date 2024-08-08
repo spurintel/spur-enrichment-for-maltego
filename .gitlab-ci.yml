@@ -1,60 +1,45 @@
 stages:
   - build
+  - stage
   - deploy
 
 build:
   stage: build
   image: google/cloud-sdk:latest
-  variables:
-    IMAGE_NAME: gcr.io/infrastructure-197809/spur-enrichment-for-maltego
 
   script:
     - gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-    - gcloud builds submit --tag ${IMAGE_NAME}:staging --gcs-log-dir gs://spur-data/logs/builds/
+    - gcloud builds submit --tag $IMAGE_NAME:latest --gcs-log-dir gs://spur-data/logs/builds/
   only:
     - master
+    - dev
   except:
     - tags
     - schedules
 
-build:on-schedule:
-  stage: build
-  only:
-    - schedules
+stage:
+  stage: deploy
   image: google/cloud-sdk:latest
-  variables:
-    IMAGE_NAME: gcr.io/infrastructure-197809/spur-enrichment-for-maltego
 
   script:
-    - latesttag=$(git describe --tags | sed -e 's/-.*//')
-    - echo checking out ${latesttag}
-    - git checkout ${latesttag}
     - gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-    - gcloud builds submit --tag ${IMAGE_NAME}:latest --gcs-log-dir gs://spur-data/logs/builds/
+    - gcloud run deploy staging-spur-enrichment-for-maltego --image $IMAGE_NAME:latest --platform managed --region=us-east1
+  only:
+    - dev
+  except:
+    - tags
+    - schedules
 
 deploy:
   stage: deploy
   image: google/cloud-sdk:latest
-  variables:
-    IMAGE_NAME: gcr.io/infrastructure-197809/spur-enrichment-for-maltego
 
   script:
     - gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-    - gcloud run deploy staging-spur-enrichment-for-maltego --image ${IMAGE_NAME}:staging --platform managed --region=us-east1
+    - gcloud run deploy spur-enrichment-for-maltego --image $IMAGE_NAME:latest --platform managed --region=us-east1
   only:
     - master
   except:
     - tags
     - schedules
 
-deploy:on-schedule:
-  stage: deploy
-  image: google/cloud-sdk:latest
-  only:
-    - schedules
-  variables:
-    IMAGE_NAME: gcr.io/infrastructure-197809/spur-enrichment-for-maltego
-
-  script:
-    - gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-    - gcloud run deploy spur-enrichment-for-maltego --image ${IMAGE_NAME}:latest --platform managed --region=us-east1

@@ -23,7 +23,7 @@ staging:
 
   script:
     - gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-    - gcloud run deploy staging-spur-enrichment-for-maltego --image $IMAGE_NAME:latest --platform managed --region=us-east1
+    - gcloud run deploy staging-spur-enrichment-for-maltego --image $IMAGE_NAME:latest --platform managed --region=us-east1 --allow-unauthenticated
   only:
     - dev
   except:
@@ -36,7 +36,7 @@ deploy:
 
   script:
     - gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-    - gcloud run deploy spur-enrichment-for-maltego --image $IMAGE_NAME:latest --platform managed --region=us-east1
+    - gcloud run deploy spur-enrichment-for-maltego --image $IMAGE_NAME:latest --platform managed --region=us-east1 --allow-unauthenticated
   only:
     - master
   except:

@@ -1,6 +1,6 @@
 stages:
   - build
-  - stage
+  - staging
   - deploy
 
 build:
@@ -17,8 +17,8 @@ build:
     - tags
     - schedules
 
-stage:
-  stage: deploy
+staging:
+  stage: staging
   image: google/cloud-sdk:latest
 
   script:
